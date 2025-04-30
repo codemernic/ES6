@@ -1,18 +1,31 @@
-// Arrow function
+//Promise the alternative for callBackFunc
 
-// const sayHello = () => {
-//   console.log("Hello");
-// }
+const posts = [{ title: "post-1" }, { title: "post-2" }];
 
-// One line function does not need braces
-// const sayHello = () => console.log("Hello");
+function createPost(post) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      posts.push(post);
+      const error = false;
+      if (!error) {
+        resolve();
+      } else {
+        reject("Something went wrong");
+      }
+    }, 2000);
+  });
+}
 
-// One line return
-// const sayHello = () => "Hello"
-// const sayHello = () => 5
-// const sayHello = () => true
-// const sayHello = () => [true]
-
-// Return object in a one line
-const sayHello = () => ({ msg: "hello" });
-console.log(sayHello());
+function getPost() {
+  setTimeout(() => {
+    let output = "";
+    posts.forEach((e) => {
+      console.log(e);
+      output += `<li>${e.title}</li>`;
+    });
+    document.body.innerHTML = output;
+  }, 1000);
+}
+createPost({ title: "post-3" })
+  .then(getPost)
+  .catch((err) => console.log(err));
